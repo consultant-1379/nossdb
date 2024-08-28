@@ -1,0 +1,22 @@
+<project name="install" basedir="." default="all">
+
+	<property name="dcinstall.require.parser" value="> 5-0-0b21"/>
+
+	<target name="install" depends="copyTmpToDeploy">
+		<if>
+  		  <available file="${dc.runtime.dir}/tomcat/webapps/techpackide/lib/nossdb.jar"/>
+  		  <then>
+  			<delete file="${dc.runtime.dir}/tomcat/webapps/techpackide/lib/nossdb.jar"/>
+			<copy todir="${dc.runtime.dir}/tomcat/webapps/techpackide/lib" flatten="true">
+				<fileset dir="${dc.platform.dir}">
+  					<include name="**/dclib/nossdb.jar"/>
+  				</fileset>
+  			</copy>
+  		  </then>
+  		  <else/>
+  	    </if>
+	</target>
+
+	<target name="update" depends="moveToObsolete,install"/>
+
+</project>
